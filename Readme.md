@@ -8,9 +8,10 @@ A secure and scalable backend application for tracking personal expenses, built 
 - Expense CRUD operations
 - Auditing enabled using Spring Data JPA (createdAt, updatedAt)
 - Pagination & sorting for expense listing
+- Swagger UI for testing endpoints
 - Role-based access control
 - Global exception handling
-- Clean layered architecture (Controller, Service, Repository)
+- Clean layered architecture (Controller, Dto, Service, Repository)
 
 ##  Tech Stack
 - Java 21
