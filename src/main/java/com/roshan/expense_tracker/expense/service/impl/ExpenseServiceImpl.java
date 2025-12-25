@@ -50,10 +50,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public Page<ExpenseResponseDTO> getMyExpenses(int page,int size,String sortBy) {
+    public Page<ExpenseResponseDTO> getMyExpenses(int page, int size, String sortBy) {
         Long userId = SecurityUtil.getCurrentUserId();
-        Pageable pageable = PageRequest.of(page,size,Sort.by(sortBy).descending());
-        Page<Expense> expenseList = expenseRepository.findByUserId(userId,pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
+        Page<Expense> expenseList = expenseRepository.findByUserId(userId, pageable);
         Page<ExpenseResponseDTO> responseList = expenseList.map(expense -> new ExpenseResponseDTO(
                 expense.getId(),
                 expense.getAmount(),
@@ -94,9 +94,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         if (expenseUpdateRequestDTO.getCategory() != null && !expenseUpdateRequestDTO.getCategory().trim().isEmpty()) {
             existingExpense.setCategory(expenseUpdateRequestDTO.getCategory());
         }
-        System.out.println(existingExpense.getAmount() + " " + existingExpense.getCategory());
         Expense savedExpense = expenseRepository.save(existingExpense);
-        System.out.println(savedExpense.getAmount() + " " + savedExpense.getCategory());
         return mapToDTO(savedExpense);
     }
 

@@ -46,7 +46,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())// aaccess to all request is denied without authentication
                 // .formLogin(Customizer.withDefaults());//login page in web
                 // if we use postman,we would get html code now in GET
-                .httpBasic(Customizer.withDefaults())// login for postman
+                // .httpBasic(Customizer.withDefaults())// login for postman
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
