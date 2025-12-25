@@ -38,8 +38,11 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())// disable csrf
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/users/register").permitAll()
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/users/register",
+                                "/auth/login",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**")
+                        .permitAll()
                         .anyRequest().authenticated())// aaccess to all request is denied without authentication
                 // .formLogin(Customizer.withDefaults());//login page in web
                 // if we use postman,we would get html code now in GET
