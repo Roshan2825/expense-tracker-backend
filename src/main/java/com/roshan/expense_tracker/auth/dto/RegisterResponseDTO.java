@@ -1,8 +1,8 @@
-package com.roshan.expense_tracker.user.dto;
+package com.roshan.expense_tracker.auth.dto;
 
 import java.time.LocalDateTime;
 
-public class UserResponseDTO {
+public class RegisterResponseDTO {
     private Long id;
     private String name;
     private String email;
@@ -29,7 +29,7 @@ public class UserResponseDTO {
     }
     
     
-    public UserResponseDTO() {
+    public RegisterResponseDTO() {
     }
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -43,7 +43,7 @@ public class UserResponseDTO {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public UserResponseDTO(Long id, String name, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public RegisterResponseDTO(Long id, String name, String email, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.email = email;

@@ -53,7 +53,7 @@ public class ExpenseController {
         return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<ExpenseResponseDTO>> deleteExpenseById(@PathVariable Long id){
         expenseService.deleteExpenseById(id);
         ApiResponse<ExpenseResponseDTO> apiResponse = new ApiResponse<>(true, "Expense deleted successfully");

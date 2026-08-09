@@ -33,20 +33,27 @@ A secure and scalable backend application for tracking personal expenses, built 
 ## Authentication Flow
 1. User registers
 2. User logs in → receives JWT
-3. JWT must be sent in Authorization header:
+3. JWT must be sent in Authorization header
 
-## 📄 API Highlights
-- `POST /api/users/register`
-- `POST /auth/login`
-- `GET /api/users/me`
-- `GET /expenses?page=0&size=10&sort=createdAt,desc`
-- `POST /api/expense/my`
-- `PATCH /api/expense/{id}`
-- `DELETE /api/expense/{id}`
+## API Highlights
+- `POST /auth/register` — register a new user
+- `POST /auth/login` — login, returns JWT in `ApiResponse.data.token`
+- `GET /api/users/me` — get current user profile (requires Bearer token)
+- `POST /api/expense/my` — create an expense
+- `GET /api/expense/my?page=0&size=10&sortBy=createdAt` — list my expenses (paged & sorted)
+- `PATCH /api/expense/{id}` — update an expense
+- `DELETE /api/expense/{id}` — delete an expense
 
-## ⚙️ Run Locally
+## Run Locally
 1. Clone repo
-2. Configure MySQL in `application.properties`
+2. Configure MySQL via environment variables (or set defaults in `application.properties`):
+   - `DB_URL` — e.g. `jdbc:mysql://localhost:3306/expense_tracker`
+   - `DB_USERNAME` — database user
+   - `DB_PASSWORD` — database password
+   - `JWT_SECRET` — secret key used to sign JWT tokens (min 32 bytes for HS256)
+   - `JWT_EXPIRATION` — token lifetime in milliseconds (default `86400000` = 1 day)
 3. Run:
 ```bash
 mvn spring-boot:run
+```
+

@@ -1,10 +1,10 @@
-package com.roshan.expense_tracker.user.dto;
+package com.roshan.expense_tracker.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class UserRequestDTO {
+public class RegisterRequestDTO {
 
     @NotBlank(message="Name is mandatory")
     private String name;
@@ -35,7 +35,7 @@ public class UserRequestDTO {
     public void setPassword(String password) {
         this.password = password;
     }
-    public UserRequestDTO() {
+    public RegisterRequestDTO() {
     }
     
     

@@ -1,8 +1,10 @@
 package com.roshan.expense_tracker.expense.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.roshan.expense_tracker.expense.dto.ExpenseRequestDTO;
 import com.roshan.expense_tracker.expense.dto.ExpenseResponseDTO;
@@ -33,7 +35,10 @@ public class ExpenseServiceImpl implements ExpenseService {
         this.userRepository = userRepository;
     }
 
+    private static final List<String> ALLOWED_SORT = List.of("createdAt", "updatedAt", "amount", "category");
+
     @Override
+    @Transactional
     public ExpenseResponseDTO createExpense(ExpenseRequestDTO expenseRequestDTO) {
         Long userId = SecurityUtil.getCurrentUserId();
 
@@ -50,8 +55,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ExpenseResponseDTO> getMyExpenses(int page, int size, String sortBy) {
         Long userId = SecurityUtil.getCurrentUserId();
+        if (!ALLOWED_SORT.contains(sortBy)) {
+            throw new IllegalArgumentException("Invalid sort field: " + sortBy);
+        }
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
         Page<Expense> expenseList = expenseRepository.findByUserId(userId, pageable);
         Page<ExpenseResponseDTO> responseList = expenseList.map(expense -> new ExpenseResponseDTO(
@@ -65,6 +74,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    @Transactional
     public void deleteExpenseById(Long id) {
         Expense expense = expenseRepository.findById(id).orElseThrow(
                 () -> new ExpenseNotFoundException("Expense not found for id:" + id));
@@ -82,6 +92,7 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
+    @Transactional
     public ExpenseResponseDTO updateExpenseById(Long id, ExpenseUpdateRequestDTO expenseUpdateRequestDTO) {
         Expense existingExpense = expenseRepository.findById(id).orElseThrow(
                 () -> new ExpenseNotFoundException("Expense not found for id:" + id));
